@@ -1,5 +1,6 @@
 package com.mlohr.hvvgti;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -15,7 +16,6 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -90,7 +90,7 @@ public class ApiClient {
             Mac mac = Mac.getInstance(algorithm);
             mac.init(keySpec);
             byte[] signature = mac.doFinal(data.toString().getBytes());
-            return Base64.getEncoder().encodeToString(signature);
+            return Base64.encodeBase64String(signature);
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         } catch (InvalidKeyException e) {
