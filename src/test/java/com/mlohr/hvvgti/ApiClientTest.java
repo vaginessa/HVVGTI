@@ -11,10 +11,9 @@ public class ApiClientTest extends TestCase {
         try {
             ApiInfo apiInfo = apiClient.init();
             fail("Should throw exception!");
-        }
-        catch (ApiException e) {
+        } catch (ApiException e) {
             assertNotNull(e.getHttpStatusCode());
-            assertEquals(e.getHttpStatusCode().intValue(), HttpStatus.SC_UNAUTHORIZED);
+            assertEquals(HttpStatus.SC_UNAUTHORIZED, e.getHttpStatusCode().intValue());
         }
     }
 }
