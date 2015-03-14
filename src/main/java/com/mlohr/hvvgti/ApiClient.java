@@ -6,6 +6,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHeader;
@@ -66,6 +67,7 @@ public class ApiClient {
         httpRequest.setHeader(new BasicHeader("geofox-auth-type", getSignatureAlgorithm().getAlgorithmString()));
         httpRequest.setHeader(new BasicHeader("geofox-auth-user", authUser));
         httpRequest.setHeader(new BasicHeader("geofox-auth-signature", generateSignature(apiRequest.getBody())));
+        httpRequest.setEntity(new ByteArrayEntity(apiRequest.getBody().toString().getBytes()));
         try {
             HttpResponse httpResponse = httpClient.execute(httpRequest);
             BasicResponseHandler responseHandler = new BasicResponseHandler();
@@ -85,12 +87,13 @@ public class ApiClient {
     private String generateSignature(JSONObject data) {
         Charset passwordEncoding = Charset.forName("UTF-8");
         String algorithm = getSignatureAlgorithm().getAlgorithmString();
-        SecretKeySpec keySpec = new SecretKeySpec(authKey.getBytes(passwordEncoding), algorithm);
+        byte[] key = authKey.getBytes(passwordEncoding);
+        SecretKeySpec keySpec = new SecretKeySpec(key, algorithm);
         try {
             Mac mac = Mac.getInstance(algorithm);
             mac.init(keySpec);
             byte[] signature = mac.doFinal(data.toString().getBytes());
-            return Base64.encodeBase64String(signature);
+            return new String(Base64.encodeBase64(signature));
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         } catch (InvalidKeyException e) {

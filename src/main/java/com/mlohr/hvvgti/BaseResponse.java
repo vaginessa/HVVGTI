@@ -20,8 +20,8 @@ public class BaseResponse {
     public BaseResponse(JSONObject responseBody) throws JSONException {
         body = responseBody;
         returnCode = ReturnCode.valueOf(body.getString("returnCode"));
-        errorText = body.getString("errorText");
-        errorDevInfo = body.getString("errorDevInfo");
+        errorText = body.optString("errorText");
+        errorDevInfo = body.optString("errorDevInfo");
     }
 
     public void assertOk() throws ApiException {

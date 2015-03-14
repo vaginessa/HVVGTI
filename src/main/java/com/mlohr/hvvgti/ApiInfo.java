@@ -25,6 +25,30 @@ public class ApiInfo {
     ApiInfo(BaseResponse response) throws ApiException, JSONException {
         response.assertOk();
         //beginOfService = dateParser.parse(response.getBody().getString("beginOfService"));
+        id = response.getBody().getString("id");
+    }
 
+    public Date getBeginOfService() {
+        return beginOfService;
+    }
+
+    public Date getEndOfService() {
+        return endOfService;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getDataId() {
+        return dataId;
+    }
+
+    public Date getBuildDateTime() {
+        return buildDateTime;
+    }
+
+    public String getBuildText() {
+        return buildText;
     }
 }
