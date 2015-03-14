@@ -102,7 +102,6 @@ public class ApiClient {
 
     public ApiInfo init() throws ApiException {
         BaseRequest apiRequest = new BaseRequest("/init", FilterType.NO_FILTER);
-        //return new ApiInfo(executeApiRequest(apiRequest));
-        return null;
+        return new ApiInfo(executeApiRequest(apiRequest));
     }
 }
