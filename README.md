@@ -1,3 +1,3 @@
-# HVVGTI
+# HVVGTI API Client #
 
-Java API Client for the HVV Geofox API
+This is a private example API implementation of the HVV Geofox API used by Hochbahn Hamburg.
