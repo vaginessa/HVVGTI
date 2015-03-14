@@ -10,6 +10,7 @@ import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHeader;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,6 +18,8 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -106,5 +109,22 @@ public class ApiClient {
     public ApiInfo init() throws ApiException {
         BaseRequest apiRequest = new BaseRequest("/init", FilterType.NO_FILTER);
         return new ApiInfo(executeApiRequest(apiRequest));
+    }
+
+    public List<Station> listStations() throws ApiException {
+        BaseRequest apiRequest = new BaseRequest("/listStations", FilterType.NO_FILTER);
+        BaseResponse response = executeApiRequest(apiRequest);
+        response.assertOk();
+        LinkedList<Station> stationsResult = new LinkedList<>();
+        JSONArray stationArray = response.getBody().getJSONArray("stations");
+        int stationCount = stationArray.length();
+        for (int i = 0; i < stationCount; i++) {
+            JSONObject stationObject = stationArray.getJSONObject(i);
+            if (stationObject.has("exists") && stationObject.getBoolean("exists") == false)
+                continue;
+            Station station = new Station(stationObject);
+            stationsResult.add(station);
+        }
+        return stationsResult;
     }
 }
