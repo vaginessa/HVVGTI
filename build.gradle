@@ -1,5 +1,9 @@
 apply plugin: 'java'
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     // basic
     compile fileTree(dir: 'libs', include: ['*.jar'])
