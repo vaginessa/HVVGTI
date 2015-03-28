@@ -124,12 +124,12 @@ public class ApiClient {
     /* public API methods */
 
     public ApiInfo init() throws ApiException {
-        BaseRequest apiRequest = new BaseRequest("/init", FilterType.NO_FILTER);
+        BaseRequest apiRequest = new BaseRequest("/init");
         return new ApiInfo(executeApiRequest(apiRequest));
     }
 
     public List<Station> listStations() throws ApiException {
-        BaseRequest apiRequest = new BaseRequest("/listStations", FilterType.NO_FILTER);
+        ListStationsRequest apiRequest = new ListStationsRequest("/listStations");
         BaseResponse response = executeApiRequest(apiRequest);
         response.assertOk();
         LinkedList<Station> stationsResult = new LinkedList<>();

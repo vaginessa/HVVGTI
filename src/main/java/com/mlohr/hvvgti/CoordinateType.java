@@ -17,22 +17,22 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-public enum FilterType {
-    NO_FILTER("NO_FILTER"),
-    HVV_LISTED("HVV_LISTED");
+public enum CoordinateType {
+    EPSG_4326("EPSG_4326"),
+    EPSG_31467("EPSG_31467");
 
-    String type;
+    private String typeString;
 
-    FilterType(String type) {
-        this.type = type;
+    CoordinateType(String typeString) {
+        this.typeString = typeString;
     }
 
-    public static FilterType getDefault() {
-        return HVV_LISTED;
+    public static CoordinateType getDefault() {
+        return EPSG_4326;
     }
 
     @Override
     public String toString() {
-        return type;
+        return typeString;
     }
 }

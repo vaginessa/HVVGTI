@@ -26,12 +26,21 @@ public class BaseRequest {
 
     private String uriPart;
 
-    private Locale locale;
+    private Locale locale = Locale.getDefault();
 
-    private FilterType filterType;
+    private FilterType filterType = FilterType.getDefault();
+
+    public BaseRequest(String uriPart) {
+        this.uriPart = uriPart;
+    }
+
+    public BaseRequest(String uriPart, Locale locale) {
+        this.uriPart = uriPart;
+    }
 
     public BaseRequest(String uriPart, FilterType filterType) {
-        this(uriPart, filterType, Locale.getDefault());
+        this.uriPart = uriPart;
+        this.filterType = filterType;
     }
 
     public BaseRequest(String uriPart, FilterType filterType, Locale locale) {
