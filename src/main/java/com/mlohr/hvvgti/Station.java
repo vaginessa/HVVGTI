@@ -36,8 +36,8 @@ public class Station {
         name = json.getString("name");
         city = json.getString("city");
         combinedName = json.optString("combinedName");
-        JSONObject pos = json.getJSONObject("coordinate");
-        position = new LonLat(pos.getDouble("x"), pos.getDouble("y"));
+        JSONObject pos = json.optJSONObject("coordinate");
+        if (pos != null) position = new LonLat(pos.getDouble("x"), pos.getDouble("y"));
     }
 
     public String getId() {
